@@ -1,0 +1,22 @@
+<p>
+  <strong>Support Request Number:</strong>
+  <%= @support_request.support_request_identity %>
+</p>
+
+<p>
+  <strong>Request type:</strong>
+  <%= @support_request.request_type %>
+</p>
+
+<p>
+  <strong>Support agent:</strong>
+  <%= @support_request.support_agent_name %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @support_request.status %>
+</p>
+
+<%= link_to_if (admin_signed_in? || support_agent_signed_in?) || (customer_signed_in? && @support_request.status == 'New'), 'Edit', edit_support_request_path(@support_request), class: "btn btn-info btn-lg", disabled: true %>
+<%= link_to 'Back', support_requests_path, class: "btn btn-info btn-lg" %>

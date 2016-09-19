@@ -1,0 +1,12 @@
+<p>
+  <strong>Name:</strong>
+  <%= @support_agent.name %>
+</p>
+
+<p>
+  <strong>Employee number:</strong>
+  <%= @support_agent.employee_number %>
+</p>
+
+<%= link_to 'Edit', edit_support_agent_path(@support_agent) %> |
+<%= link_to 'Back', support_agents_path %>

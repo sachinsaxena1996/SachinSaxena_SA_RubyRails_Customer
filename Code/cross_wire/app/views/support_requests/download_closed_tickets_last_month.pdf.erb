@@ -1,0 +1,27 @@
+<h3>Support Requests closed in last one month</h3>
+<table border="2">
+  <thead>
+    <tr>
+      <th>Support Request Number</th>
+      <th>Request Type</th>
+      <th>Support Agent</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @support_requests.present? %>
+      <% @support_requests.each do |support_request| %>
+        <tr>
+          <td><%= support_request.support_request_identity %></td>
+          <td><%= support_request.request_type %></td>
+          <td><%= support_request.support_agent_name if support_request.support_agent_name.present?%></td>
+          <td><%= support_request.status %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <h3>No Support Requests records found</h3>
+    <% end %>
+  </tbody>
+</table>
+

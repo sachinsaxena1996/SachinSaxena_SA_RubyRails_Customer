@@ -1,0 +1,51 @@
+<h3>Support Requests</h3>
+<table id="support_request_table" border="2">
+  <thead>
+    <tr>
+      <th>Support Request Number</th>
+      <th>Request Type</th>
+      <th>Support Agent</th>
+      <th>Status</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Destroy</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @support_requests.present? %>
+      <% @support_requests.each do |support_request| %>
+        <tr>
+          <td><%= support_request.support_request_identity %></td>
+          <td><%= support_request.request_type %></td>
+          <td><%= support_request.support_agent_name if  support_request.support_agent_name.present?%></td>
+          <td><%= support_request.status %></td>
+          <td><%= link_to 'Show', support_request, class: "btn btn-info btn-lg" %></td>
+          <td> <%= link_to_if (admin_signed_in? || support_agent_signed_in?) || (customer_signed_in? && support_request.status == 'New'), 'Edit', edit_support_request_path(support_request), class: "btn btn-info btn-lg", disabled: true %></td>
+          <td><%= link_to_if customer_signed_in?, 'Destroy', support_request, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-info btn-lg" %></td>
+          </tr>
+      <% end %>
+    <% else %>
+      <h3>No Support Requests records found</h3>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if customer_signed_in? %>
+  <%= link_to 'New Support Request', new_support_request_path, class: "btn btn-info btn-lg" %>
+<% end %>
+
+<% if support_agent_signed_in? || admin_signed_in? %>
+  <%= link_to 'Download Report', download_closed_tickets_last_month_path, class: "btn btn-info btn-lg" %>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready( function () {
+      $('#support_request_table').DataTable({
+          "paging": true,
+          "scrollY": 400,
+          "ordering": true
+        });
+  } );
+</script>

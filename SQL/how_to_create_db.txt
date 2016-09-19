@@ -1,0 +1,8 @@
+Instructions to create and initialize the database (if required)
+To create db :
+rake db:create
+
+To run migrations :
+rails db:migrate
+
+Note: Please read database.yml for more information. 

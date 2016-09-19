@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>CrossWire</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<%= csrf_meta_tags %>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+  		<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+	</head>
+	<style>
+		body {
+			background-color: lightblue;
+		}
+	</style>
+	<body>
+		<div class="container">
+		<% if admin_signed_in? %>
+		    <p id="notice">Welcome <%= "Admin" + " " + current_admin.email %>  </p>
+			<%= link_to "Sign out", destroy_admin_session_path, class: "btn btn-info btn-lg", :method => :delete %>
+			<%= link_to "Invite Support Agent", new_support_agent_invitation_path, class: "btn btn-info btn-lg" %>
+		<% elsif customer_signed_in? %>
+		    <p id="notice">Welcome Customer <%= current_customer.email %>  </p>
+			<%= link_to "Sign out", destroy_customer_session_path, class: "btn btn-info btn-lg", :method => :delete %>
+		<% elsif support_agent_signed_in? %>
+		    <p id="notice">Welcome Support Agent <%= current_support_agent.email %>  </p>
+			<%= link_to "Sign out", destroy_support_agent_session_path, class: "btn btn-info btn-lg", :method => :delete %>
+		<% end %>
+		<% if notice.present? %>
+			<div class="alert alert-success"><%= notice %></div>
+		<% end %>
+		<% if alert.present? %>
+			<div class="alert alert-warning"><%= alert %></div>
+		<% end %>
+		<%= yield %>
+		</div>
+	</body>
+</html>
+

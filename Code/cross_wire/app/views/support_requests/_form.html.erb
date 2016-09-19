@@ -1,0 +1,36 @@
+<%= form_for(support_request) do |f| %>
+  <% if support_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(support_request.errors.count, "error") %> prohibited this support_request from being saved:</h2>
+
+      <ul>
+      <% support_request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if f.object.support_request_identity.present? %>
+    <div class="form-group">
+      <%= f.label :support_request_identity %>
+      <%= f.object.support_request_identity %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :request_type %>
+    <%= f.select(:request_type, options_for_sr_type, class: "form-control") %>
+  </div>
+
+  <% if admin_signed_in? || support_agent_signed_in? %>
+    <div class="form-group">
+      <%= f.label :status %>
+      <%= f.select(:status, options_for_state, class: "form-control") %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.submit(data: { disable_with: "Please Wait..." }, class: "btn btn-info btn-lg") %>
+  </div>
+<% end %>
+
